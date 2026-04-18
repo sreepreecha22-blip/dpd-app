@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DPD Debugger</title>
+</head>
+<body>
+  <h2>คุณกำลังเป็นยังไง?</h2>
+
+  <textarea id="input" rows="4" cols="50"></textarea><br><br>
+
+  <button onclick="analyze()">ช่วยฉันดู</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    async function analyze() {
+      const input = document.getElementById("input").value;
+
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ input })
+      });
+
+      const data = await res.json();
+      document.getElementById("output").innerText = data.result;
+    }
+  </script>
+</body>
+</html>
